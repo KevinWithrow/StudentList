@@ -1,0 +1,24 @@
+{
+  "name": "studentlist",
+  "version": "1.0.0",
+  "description": "list of students",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KevinWithrow/StudentList.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KevinWithrow/StudentList/issues"
+  },
+  "homepage": "https://github.com/KevinWithrow/StudentList#readme",
+  "dependencies": {
+    "express": "4.17.1",
+    "knex": "^0.21.1",
+    "pg": "8.1.0"
+  }
+}
