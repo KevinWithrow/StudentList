@@ -25,7 +25,7 @@ const dummyLists = [
 const dummyItems = [
   {
     uuid: 'adfhhkkkkhgh',
-    description: 'wash tht dog',
+    description: 'can I pet that dog!',
     display_order: 1
   },
   {
@@ -34,6 +34,21 @@ const dummyItems = [
     display_order: 2
   }
 ]
+
+app.param('listUUID', function (rec, res, nextFn, listUUID) {
+  db.getList(listUUID)
+  .then((theList) => {
+    req.list = theList
+    nextFn()
+  })
+    .catch(() => {
+      res.status(404).send('list not found')
+    })
+  console.log(listUUID)
+  console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+  console.log('CALLED ONLY ONCE')
+  next()
+})
 
 // the homepage shows your lists
 app.get('/', function (req, res) {
