@@ -1,4 +1,5 @@
 const express = require('express')
+const db = require('./lib/db')
 
 const app = express()
 
@@ -36,7 +37,14 @@ const dummyItems = [
 
 // the homepage shows your lists
 app.get('/', function (req, res) {
-  res.render('index', { lists: dummyLists})
+  db.getLists()
+  .then((lists) => {
+    res.render('index', { lists: lists})
+  })
+  .catch(() => {
+    //TODO: show and error page here
+  })
+ 
 })
 
 //the list page shows the items in the list
@@ -44,7 +52,34 @@ app.get('/list/:listUUID', function (req, res) {
   res.render('list_page', { listname: 'Dummy List', items: dummyItems})
 })
 
-app.listen(port, () => {
-console.log('express is listening on port ' + port)
-})
+const startExpressApp = () => {
+  app.listen(port, () => {
+    console.log('express is listening on port ' + port)
+    })      
+}
+
+const bootupSequenceFailed = (err) => {
+  console.error('You are unable to connect to the database:', err)
+  console.error('Goodbye!')
+  process.exit(1)
+}
+//global kickoff point
+
+db.connect()
+  .then(startExpressApp)
+  .then(testSomething)
+  .catch(bootupSequenceFailed)
+  
+  
+function testSomething (){
+  db.getLists()
+  .then((lists) => {
+    console.log("the lists")
+    console.log(lists)
+  })
+}
+ 
+
+
+
 
